@@ -5,12 +5,18 @@ import { FormControl } from '../FormControl/FormControl';
 import { TodoList } from '../TodoList/TodoList';
 
 export const CollectionToDo = () => {
-    const todoList = useSelector(state => state.collections.collections);
+	const selector = useSelector(state => state.collections);
+	const todoList = selector.collections;
+	const active = selector.collectionActive;
+	
     return (
         <div className="list-left list">
 			<div className="list-left__content content">
 				<FilterColection todoList={todoList}/>
-				<TodoList todoList={todoList}/>
+				<TodoList 
+					todoList={todoList}
+					active={active}
+				/>
 			</div>
             <FormControl 
                 placeholder={'Введите название нового списка'}/>

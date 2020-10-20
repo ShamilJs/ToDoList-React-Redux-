@@ -1,24 +1,31 @@
-import React from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { makeCollectionActive } from '../../redux/actions';
+import { Inscription } from '../Other/Inscription';
 
-// import { ToDoListItem } from '../ToDoListItem/ToDoListItem';
+export const TodoList = ({ todoList, active }) => {
+	const dispatch = useDispatch();
+	const [activeClass, setActiveClass] = useState('todo-item list-active active');
 
-export const TodoList = ({ todoList }) => {
-    
     if (!todoList.length) {
-        return <p>Списки дел не созданы</p>
+        return <Inscription inscription={'Списки дел не созданы'}/>
     }
-    // console.log(todoList);
     return (
         <ul className="content__todo todo-list">
-			{todoList.map((item,i) => (<li className="todo-item list-active active" key={i}>
-					<span className="text-todo -left">{item}</span>
+			{todoList.map((item,i) => (<li className={(item[0] === active) ? activeClass : ('todo-item list-active')} 
+											key={item[4]}>
+					<span 
+						className="text-todo -left"
+						onClick={(e) => {
+							dispatch(makeCollectionActive(e.target.textContent));
+							setActiveClass('todo-item list-active active');
+						}}
+					>{item[0]}</span>
 					<div className="todo-buttons">
 						<button className="todo-remove"></button>
 					</div>
 				</li>
-			))}
-            
+			))} 
 		</ul>
     );
 };

@@ -205,6 +205,11 @@ body {
 .text-todo{
     display: inline-block;
 }
+
+.text-through {
+    text-decoration: line-through;
+}
+
 .todo-status {
     background-color: red;
     border: 1px solid red;
