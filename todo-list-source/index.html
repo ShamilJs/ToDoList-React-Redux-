@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ToDo</title>
+
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+	
+</head>
+
+<body>
+
+	<header class="header">
+		<p class="header__title">ToDo List</p>
+	</header>
+
+	<main class="main">
+		<div class="list-left list">
+			<div class="list-left__content content">
+				<select class="content__filter">
+					<option>Все списки</option>
+					<option>Дела на неделю</option>
+					<option>Дела на месяц</option>
+				</select>
+				<ul class="content__todo todo-list">
+					<li class="todo-item list-active active">
+						<span class="text-todo -left">Дела на неделю (есть незавершенные, активный список)</span>
+						<div class="todo-buttons">
+							<button class="todo-remove"></button>
+						</div>
+					</li>
+					<li class="todo-item list-compl">
+						<span class="text-todo -left">Дела на месяц (все завершены)</span>
+						<div class="todo-buttons">
+							<button class="todo-remove"></button>
+						</div>
+					</li>
+					<li class="todo-item">
+						<span class="text-todo -left">Дела тест (нет дел)</span>
+						<div class="todo-buttons">
+							<button class="todo-remove"></button>
+						</div>
+					</li>
+				</ul>
+
+			</div>
+			<form class="list-left__control todo-control">
+				<label><input class="todo-control__input" type="text" placeholder="Введите название нового списка"></label>
+				<button class="todo-control__button" id="add"></button>
+			</form>	
+		</div>
+		<div class="list-right list">
+			<div class="list-right__content content">
+				<span class="content__title">Дела на неделю</span>
+				<ul class="content__todo todo-list">
+					<li class="todo-item">
+						<div class="todo-item__title">
+							<div class="todo-status fast"></div>
+							<span class="text-todo">Купить МиниКупер</span>
+						</div>
+						<div class="todo-buttons">
+							<div class="todo-date">16.10.2020</div>
+							<div class="todo-btn">
+								<button class="todo-complete">
+									<img src="./img/uncheck.png">
+								</button>
+								<button class="todo-remove"></button>
+							</div>
+						</div>
+					</li>
+					<li class="todo-item">
+						<div class="todo-item__title">
+							<div class="todo-status"></div>
+							<span class="text-todo">Купить МиниКупер</span>
+						</div>
+						<div class="todo-buttons">
+							<div class="todo-date">16.10.2020</div>
+							<div class="todo-btn">
+								<button class="todo-complete">
+									<img src="./img/check_.png">
+								</button>
+								<button class="todo-remove"></button>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<button class="content__sort">
+					<p class="sort__title">Сортировать по дате</p>
+					<img src="./img/sort.png">
+
+				</button>
+				<select class="content__filter right_filter ">
+					<option>Дела на неделю</option>
+					<option>Дела на месяц</option>
+				</select>
+			</div>
+			<div class="list-right__control control">
+				<form class="control__form todo-control">
+					<label><input class="todo-control__input" type="text" placeholder="Введите название нового дела"></label>
+					<button class="todo-control__button" id="add"></button>
+				</form>
+				<div class="control__status status">
+					<input type="checkbox" class="status__input" id="check"></input>
+					<label for="check" class="status__title">Срочное</label>
+				</div>	
+			</div>
+		</div>			
+	</main>
+	<div class="modal__remove modal unblock">
+		<div class="oveflow">
+			<div class="modal__title">Удалить дело<br> "Купить МиниКупер"?</div>
+			<div class="modal__button button">
+				<button class="button__yes btn">Да</button>
+				<button class="button__no btn">Нет</button>
+			</div>
+			<div class="modal__close">X</div>
+		</div>	
+	</div>
+	<div class="modal__add modal unblock ">
+		<div class="oveflow">
+			<div class="modal__title">"Купить МиниКупер"<br>добавлено в "Дела на неделю"</div>
+			<div class="modal__button button">
+				<button class="button__yes btn">ОК</button>
+			</div>
+			<div class="modal__close">X</div>
+		</div>	
+	</div>
+
+</body>
+
+</html>
