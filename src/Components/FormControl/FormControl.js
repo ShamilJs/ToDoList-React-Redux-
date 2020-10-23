@@ -1,7 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { createCollection, showModalSuccessful, createTodoList, makeCollectionActive } from '../../redux/actions';
+import { createCollection,
+	showModalSuccessful,
+	createTodoList,
+	makeCollectionActive,
+	changeStatusCollection
+} from '../../redux/actions';
 
 
 export const FormControl = ({ placeholder, toDoRight}) => {
@@ -44,14 +49,20 @@ export const FormControl = ({ placeholder, toDoRight}) => {
 			if (collection.length === 0) {
 				return;
 			}
-			const arr = [form.title, form.fast, form.date, form.time, form.titleToDo, form.complete, form.id];
-			dispatch(createTodoList(arr));
+			// const arr = [form.title, form.fast, form.date, form.time, form.titleToDo, form.complete, form.id];
+			// dispatch(createTodoList(arr));
+			dispatch(createTodoList(form));
 			dispatch(showModalSuccessful('right'));
+			dispatch(changeStatusCollection(form.titleToDo, 1));
 		} else {
-			const arr = [form.title, form.fast, form.date, form.time, form.id];
-			dispatch(createCollection(arr));
+			const formCollection = {
+				title: form.title, 
+				id: form.id
+			};
+			dispatch(createCollection(formCollection));
 			dispatch(showModalSuccessful('left'));
-			dispatch(makeCollectionActive(form.title));
+			dispatch(makeCollectionActive(formCollection.title));
+			dispatch(changeStatusCollection(formCollection.title, 0));
 		}
 		
 		setForm({

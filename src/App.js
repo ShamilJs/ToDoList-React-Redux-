@@ -9,12 +9,14 @@ const App = () => {
 	let messageSide = '';
 	const selectorApp = useSelector(state => state.app);
 	const selectorCollection = useSelector(state => state.collections.collections);
-	const newTodoList = selectorCollection[selectorCollection.length-1];
+	const newTodoList = selectorCollection[selectorCollection.length - 1];
+	const newTodo = useSelector(state => state.collections.todoList[state.collections.todoList.length - 1]);
+
 
 	if (selectorApp.side === 'left' && newTodoList) {
-		messageSide = `Создан новый список "${newTodoList[0]}"`;
-	} else if (selectorApp.side === 'left' && newTodoList) {
-		messageSide = `ЗАПОЛНИ МЕНЯ`;
+		messageSide = `Создан новый список "${newTodoList.title}"`;
+	} else if (selectorApp.side === 'right' && newTodoList) {
+		messageSide = `Создано новое дело "${newTodo.title}"`;
 	}
 
 

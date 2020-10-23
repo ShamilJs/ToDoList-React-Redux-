@@ -3,7 +3,8 @@ import { CREATE_COLLECTION_TO_DO,
 		SHOW_MODAL_SUCCESSFUL_OPERATION,
 		HIDE_MODAL_SUCCESSFUL_OPERATION,
         CREATE_TO_DO_LIST,
-        CHANGE_COMPLETE_STATE
+        CHANGE_COMPLETE_STATE,
+        CHANGE_STATUS_COLLECTION_TO_DO_LIST
 	} from './types';
 
     
@@ -51,3 +52,12 @@ export const hideModalSuccessful = (side) => {
 		side: side
     };
 };
+
+export const changeStatusCollection = (title, status) => {
+    return {
+        type: CHANGE_STATUS_COLLECTION_TO_DO_LIST,
+		payload: status,
+		title: title
+    };
+};
+

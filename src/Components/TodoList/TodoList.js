@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { makeCollectionActive } from '../../redux/actions';
 import { Inscription } from '../Other/Inscription';
 
 export const TodoList = ({ todoList, active }) => {
 	const dispatch = useDispatch();
-	const [activeClass, setActiveClass] = useState('todo-item list-active active');
-
+	
     if (!todoList.length) {
         return <Inscription inscription={'Списки дел не созданы'}/>
-    }
+	}
+	
     return (
         <ul className="content__todo todo-list">
-			{todoList.map((item,i) => (<li className={(item[0] === active) ? activeClass : ('todo-item list-active')} 
-											key={item[4]}>
+			{todoList.map(item => (<li className={
+														(item.status === 0) ? `todo-item ${(item.title === active) ? 'active' : ''}` :
+														(item.status === 1) ? `todo-item ${(item.title === active) ? 'active' : ''} list-active` :
+														(`todo-item ${(item.title === active) ? 'active' : ''} list-compl`)
+													} 
+											key={item.id}>
 					<span 
 						className="text-todo -left"
-						onClick={(e) => {
-							dispatch(makeCollectionActive(e.target.textContent));
-							setActiveClass('todo-item list-active active');
-						}}
-					>{item[0]}</span>
+						onClick={(e) => dispatch(makeCollectionActive(e.target.textContent))}
+					>
+						{item.title}
+					</span>
 					<div className="todo-buttons">
 						<button className="todo-remove"></button>
 					</div>

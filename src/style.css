@@ -270,7 +270,9 @@ body {
 .-left{
     cursor: pointer;
 }
-
+.list-left__control{
+    margin-right: 20px;
+}
 /*/////////////////////////////////////////////////////////////////modal*/
 .modal{
     width: 100%;
@@ -453,6 +455,9 @@ body {
     }
     .todo-item {
         min-height: 80px;
+    }
+    .list-right__control{
+        flex-direction:column-reverse;
     }
 }
 /*---------------------------------list-right----------------------------------*/
