@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch} from 'react-redux';
-import { changeCompleteState, changeStatusCollection } from '../../redux/actions';
+import { changeCompleteState, changeStatusCollection, showModalRemove } from '../../redux/actions';
+import { Inscription } from '../Other/Inscription';
 
 
 export const ListItem = ({ todoList, titleCollection }) => {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+	
+
+
     // const selector = useSelector(state => state.collections);
 	// const collectionActive = selector.collectionActive;
 
@@ -12,6 +16,8 @@ export const ListItem = ({ todoList, titleCollection }) => {
 	const [count, setCount] = useState([]);
 	let value = [];
 	let status = {title: '', status: 1};
+
+	
 
 	const changeStatusList = () => {
 		
@@ -45,7 +51,11 @@ export const ListItem = ({ todoList, titleCollection }) => {
     };
 	useEffect( changeStatusList, [count]);
 
+	if (!result.length) {
+			return <Inscription inscription={'Список дел пуст'}/>
+		}
 
+		
     return (
         <ul className="content__todo todo-list">
             {result.map(item => (
@@ -66,7 +76,10 @@ export const ListItem = ({ todoList, titleCollection }) => {
                                     name={item.id} alt='chek'
                                 />
                             </button>
-                            <button className="todo-remove"></button>
+							<button 
+								className="todo-remove"
+								onClick={() => dispatch(showModalRemove(item.id))}
+							></button>
                         </div>
                     </div>
                 </li>

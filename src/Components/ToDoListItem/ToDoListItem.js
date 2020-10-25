@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { FilterColection } from '../FilterCollection/FilterColection';
 import { FormControl } from '../FormControl/FormControl';
-import { Inscription } from '../Other/Inscription';
 import { ListItem } from './ListItem';
 
 export const ToDoListItem = () => {
@@ -13,10 +12,7 @@ export const ToDoListItem = () => {
     return (
         <div className="list-right list">
 			<div className="list-right__content content">
-				{
-					titleCollection ? <span className="content__title">{titleCollection}</span> :
-						<Inscription inscription={'Список дел пуст'}/>
-				}
+				{<span className="content__title">{titleCollection}</span>}
 				<ListItem 
 					todoList={todoList}
 					titleCollection={titleCollection}

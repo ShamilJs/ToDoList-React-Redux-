@@ -1,7 +1,10 @@
 import { CREATE_COLLECTION_TO_DO,
     MAKE_COLLECTION_TO_DO_ACTIVE,
     CREATE_TO_DO_LIST, CHANGE_COMPLETE_STATE,
-    CHANGE_STATUS_COLLECTION_TO_DO_LIST
+    CHANGE_STATUS_COLLECTION_TO_DO_LIST,
+    REMOVE_LIST_ITEM,
+    REMOVE_LIST,
+    REMOVE_LIST_ALL
 } from './types';
 
 const initiaState = {
@@ -31,6 +34,15 @@ export const listItemReducer = (state = initiaState, action) => {
         case CHANGE_STATUS_COLLECTION_TO_DO_LIST:
             return {...state, collections: state.collections.map(item => item.title === action.title ?
                 {...item, status: action.payload} : item)}
+
+        case REMOVE_LIST_ITEM:
+            return {...state, todoList: state.todoList.filter(item => item.id !== action.payload)}
+
+        case REMOVE_LIST: 
+            return { ...state, collections: state.collections.filter(item => item.id !== action.payload)}
+
+        case REMOVE_LIST_ALL:
+            return {...state, todoList: action.payload}
 
         default: return state;
     }

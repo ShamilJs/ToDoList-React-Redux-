@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { makeCollectionActive } from '../../redux/actions';
+import { makeCollectionActive, showModalRemove } from '../../redux/actions';
 import { Inscription } from '../Other/Inscription';
 
 export const TodoList = ({ todoList, active }) => {
@@ -25,7 +25,10 @@ export const TodoList = ({ todoList, active }) => {
 						{item.title}
 					</span>
 					<div className="todo-buttons">
-						<button className="todo-remove"></button>
+						<button 
+							className="todo-remove"
+							onClick={() => dispatch(showModalRemove(item.id, 'left'))}
+						></button>
 					</div>
 				</li>
 			))} 

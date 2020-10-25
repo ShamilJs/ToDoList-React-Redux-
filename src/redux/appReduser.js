@@ -13,10 +13,6 @@ export const appReduser = (state = initiaState, action) => {
             return {...state, modal: action.payload, side: action.side};
         case HIDE_MODAL_SUCCESSFUL_OPERATION: 
             return {...state, modal: action.payload};
-                
         default: return state;
     }
-
-
-
 };
