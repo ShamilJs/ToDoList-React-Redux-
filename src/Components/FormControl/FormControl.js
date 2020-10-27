@@ -4,53 +4,49 @@ import { useState } from 'react';
 import { createCollection,
 	showModalSuccessful,
 	createTodoList,
-	makeCollectionActive,
-	changeStatusCollection
-} from '../../redux/actions';
+	changeStatusCollection } from '../../redux/actions';
 
 
-export const FormControl = ({ placeholder, toDoRight}) => {
+export const FormControl = ({ placeholder, toDoRight }) => {
+	const collections = useSelector(state => state.collections),
+		collection = collections.collections,
+		selector = collections.collectionActive;
+
 	const dispatch = useDispatch();
-	const collections = useSelector(state => state.collections);
-	const collection = collections.collections;
-	const selector = collections.collectionActive;
-	
 
 	const [form, setForm] =
 		useState({
-					title:'', 
-					fast: false,
-					date: '',
-					time: '',
-					titleToDo: '',
-					complete: false,
-					id: ''
-				});
+				title:'', 
+				fast: false,
+				date: '',
+				time: '',
+				titleToDo: '',
+				complete: false,
+				id: ''
+			});
 					
 	const createDate = () => {
 		const dateNow = new Date();
-		let str = {};
-		let day = (dateNow.getDate() + '').length > 1 ? (dateNow.getDate() + '') : '0' + dateNow.getDate();
-		let month = ((dateNow.getMonth() + 1) + '').length > 1 ? ((dateNow.getMonth() + 1) + '') : '0' + (dateNow.getMonth() + 1);
-		let hours = (dateNow.getHours() + '').length > 1 ? (dateNow.getHours() + '') : '0' + dateNow.getHours();
-		let minutes = (dateNow.getMinutes() + '').length > 1 ? (dateNow.getMinutes() + '') : '0' + dateNow.getMinutes();
+
+		let str = {},
+			day = (dateNow.getDate() + '').length > 1 ? (dateNow.getDate() + '') : '0' + dateNow.getDate(),
+			month = ((dateNow.getMonth() + 1) + '').length > 1 ? ((dateNow.getMonth() + 1) + '') : '0' + (dateNow.getMonth() + 1),
+			hours = (dateNow.getHours() + '').length > 1 ? (dateNow.getHours() + '') : '0' + dateNow.getHours(),
+			minutes = (dateNow.getMinutes() + '').length > 1 ? (dateNow.getMinutes() + '') : '0' + dateNow.getMinutes(),
+			seconds = (dateNow.getSeconds() + '').length > 1 ? (dateNow.getSeconds() + '') : '0' + dateNow.getSeconds();
+
 		str.date = day + "." + month + "." + dateNow.getFullYear();
-		str.time = hours + ":" + minutes;
+		str.time = hours + ":" + minutes + ":" + seconds;
 		return str;
 	};
 
 	const sendToStore = (e) => {
 		e.preventDefault();
-		if (!form.title.trim()) {
-			return;
-		}
-		
+		if (!form.title.trim()) return;
 		if (toDoRight) {
 			if (collection.length === 0) {
 				return;
 			}
-			// const arr = [form.title, form.fast, form.date, form.time, form.titleToDo, form.complete, form.id];
-			// dispatch(createTodoList(arr));
 			dispatch(createTodoList(form));
 			dispatch(showModalSuccessful('right'));
 			dispatch(changeStatusCollection(form.titleToDo, 1));
@@ -61,10 +57,8 @@ export const FormControl = ({ placeholder, toDoRight}) => {
 			};
 			dispatch(createCollection(formCollection));
 			dispatch(showModalSuccessful('left'));
-			dispatch(makeCollectionActive(formCollection.title));
 			dispatch(changeStatusCollection(formCollection.title, 0));
 		}
-		
 		setForm({
 			title:'', 
 			fast: false,
@@ -82,10 +76,12 @@ export const FormControl = ({ placeholder, toDoRight}) => {
 		const target = e.target;
 		const value =  target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
-		setForm(form => ({...form, [name]: value}));
-		setForm(form => ({...form, date: str.date, time: str.time}));
-		setForm(form => ({...form, titleToDo: selector}));
-		setForm(form => ({...form, id: `cmr${(+ new Date()).toString(16)}`}));
+		setForm(form => ({...form, [name]: value,
+			date: str.date,
+			time: str.time,
+			titleToDo: selector,
+			id: `cmr${(+ new Date()).toString(16)}`
+		}));
 	};
 
     return (		

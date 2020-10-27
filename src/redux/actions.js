@@ -8,11 +8,11 @@ import { CREATE_COLLECTION_TO_DO,
         CHANGE_COMPLETE_STATE,
         CHANGE_STATUS_COLLECTION_TO_DO_LIST,
         REMOVE_LIST_ITEM,
+        REMOVE_LIST_ITEM_WHEN_DELETING_A_SHEET,
         REMOVE_LIST,
-        REMOVE_LIST_ALL
-	} from './types';
+        REMOVE_LIST_ALL,
+        SORT_BY_DATA } from './types';
 
-    
 export const createCollection = collectionItem => {
     return {
         type: CREATE_COLLECTION_TO_DO,
@@ -58,7 +58,6 @@ export const hideModalSuccessful = (side) => {
     };
 };
 
-
 export const showModalRemove = (id, side) => {
     return {
         type: SHOW_MODAL_REMOVE_LIST_ITEM,
@@ -82,6 +81,13 @@ export const removeItem = (id) => {
     };
 };
 
+export const removeItemWhenDaletingASheet = (title) => {
+    return {
+        type: REMOVE_LIST_ITEM_WHEN_DELETING_A_SHEET,
+		payload: title
+    };
+};
+
 export const removeList = (id) => {
     return {
         type: REMOVE_LIST,
@@ -96,7 +102,6 @@ export const removeListAll = () => {
     };
 };
 
-
 export const changeStatusCollection = (title, status) => {
     return {
         type: CHANGE_STATUS_COLLECTION_TO_DO_LIST,
@@ -105,3 +110,8 @@ export const changeStatusCollection = (title, status) => {
     };
 };
 
+export const sortByData = () => {
+    return {
+        type: SORT_BY_DATA
+    };
+};

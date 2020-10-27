@@ -1,58 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FilterColection } from '../FilterCollection/FilterColection';
 import { FormControl } from '../FormControl/FormControl';
 import { TodoList } from '../TodoList/TodoList';
-import { makeCollectionActive } from '../../redux/actions';
 
-export const CollectionToDo = () => {
-	const dispatch = useDispatch();
+
+export const CollectionToDo = ({sort, setSort }) => {
 	const selector = useSelector(state => state.collections);
 	const todoList = selector.collections;
 
-	const [value, setValue] = useState('Bce списки');
+	const [select, setSelect] = useState('');
 
 	const [result, setResult] = useState([]);
-	useEffect(() => {
-		setResult([...todoList])
-	}, [todoList])
 
+	const arr = useRef([]);
 
 	let active = selector.collectionActive;
 
-	let arr = [];
-
-	const changeSelect = () => {
-		if (!value){
-			arr = todoList;
-			setResult([...arr]);
-			active = selector.collectionActive;
+	const handleChange = useCallback(() => {
+		if (select === '') return;
+		if (select === 'Все списки') {
+			setSort([...todoList]);
+			setResult([...todoList]);
 			return;
 		}
-		if (value !== 'Bce списки') {
-			arr = todoList.filter(item => item.id === value);
-			active = result[0].title;
-		}
-		setResult([...arr]);
-		dispatch(makeCollectionActive(active));
-	};
-	useEffect(changeSelect, [value]);
+		arr.current = todoList.filter(item => item.id === select);
+		setResult([...arr.current]);
+		setSort([...arr.current])
+	}, [todoList, select, setSort]);
+
+	useEffect(handleChange, [select]);
+
+	useEffect(() => {
+		setResult([...todoList]);
+		handleChange();
+	}, [todoList, handleChange])
+
 
     return (
-        <div className="list-left list">
-			<div className="list-left__content content">
-				<FilterColection 
-					todoList={todoList}
-					value={value}
-					setValue={setValue}
-				/>
-				<TodoList 
-					todoList={result}
-					active={active}
-				/>
+			<div className="list-left list">
+				<div className="list-left__content content">
+					<FilterColection 
+						setSelect={setSelect}
+						todoList={todoList}
+						handleChange={handleChange}
+					/>
+					<TodoList 
+						todoList={result}
+						active={active}
+					/>
+				</div>
+				<FormControl 
+					placeholder={'Введите название нового списка'}/>
 			</div>
-            <FormControl 
-                placeholder={'Введите название нового списка'}/>
-        </div>
     );
 };

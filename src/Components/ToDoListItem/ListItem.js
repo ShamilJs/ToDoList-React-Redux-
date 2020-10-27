@@ -7,20 +7,14 @@ import { Inscription } from '../Other/Inscription';
 export const ListItem = ({ todoList, titleCollection }) => {
 	const dispatch = useDispatch();
 	
-
-
-    // const selector = useSelector(state => state.collections);
-	// const collectionActive = selector.collectionActive;
-
-    const result = todoList.filter(item =>item.titleToDo === titleCollection);
-	const [count, setCount] = useState([]);
-	let value = [];
-	let status = {title: '', status: 1};
-
+	const result = todoList.filter(item => item.titleToDo === titleCollection);
 	
+	const [count, setCount] = useState([]);
+
+	let value = [],
+		status = {title: '', status: 1};
 
 	const changeStatusList = () => {
-		
 		if (!result.length || !count.length) {
 			return;
 		} else {
@@ -48,13 +42,11 @@ export const ListItem = ({ todoList, titleCollection }) => {
 			} 
 		});
 		setCount(value);
-    };
-	useEffect( changeStatusList, [count]);
+	};
+	
+	useEffect(changeStatusList, [count]);
 
-	if (!result.length) {
-			return <Inscription inscription={'Список дел пуст'}/>
-		}
-
+	if (!result.length) return <Inscription inscription={'Список дел пуст'}/>
 		
     return (
         <ul className="content__todo todo-list">

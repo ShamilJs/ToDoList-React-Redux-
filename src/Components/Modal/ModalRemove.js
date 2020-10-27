@@ -5,33 +5,50 @@ import { hideModalRemove,
 	changeStatusCollection,
 	removeList,
 	makeCollectionActive,
-	removeListAll
+	removeListAll,
+	removeItemWhenDaletingASheet
 } from '../../redux/actions';
 
 export const ModalRemove = ({ id, side }) => {
-	const toDoListItems = useSelector(state => state.collections.todoList);
-	const collections = useSelector(state => state.collections.collections);
-	const collectionActive = useSelector(state => state.collections.collectionActive);
-	const toDoActive = toDoListItems.filter(item => item.titleToDo === collectionActive);
+	const toDoListItems = useSelector(state => state.collections.todoList),
+		collections = useSelector(state => state.collections.collections),
+		collectionActive = useSelector(state => state.collections.collectionActive),
+		toDoActive = toDoListItems.filter(item => item.titleToDo === collectionActive);
 
 	const dispatch = useDispatch();
 
-	let itemName = '';
-	let arr = [];
+	let itemName = '',
+		arr = [];
 
-	if (side) {
-		arr = collections;
-	} else {
-		arr = toDoListItems;
-	}
+	if (side) arr = collections;
+	else arr = toDoListItems;
 
-	arr.forEach(element => {
-		if (element.id === id) {
-			itemName = element.title
+	arr.forEach(element => (element.id === id) ? itemName = element.title : itemName);
+
+	const removeItems = () => {
+		if (!side) {
+			dispatch(removeItem(id));
+			if (toDoActive.length === 1) {
+				dispatch(changeStatusCollection(collectionActive, 0));
+			} else {
+				let count = 0;
+				toDoActive.forEach(item => {
+					if (item.complete) {
+						count ++; 
+						if (count === toDoActive.length - 1) dispatch(changeStatusCollection(collectionActive, 2));
+					}
+				});
+			}
+		} else {
+			dispatch(removeList(id));
+			dispatch(removeItemWhenDaletingASheet(itemName));
+			if (collections.length === 1) dispatch(removeListAll());
+			dispatch(makeCollectionActive(''));
 		}
-	});
+		dispatch(hideModalRemove());
+	};
 
-
+	
     return (
         <div className="modal__remove modal">
             <div className="oveflow">
@@ -39,39 +56,7 @@ export const ModalRemove = ({ id, side }) => {
                 <div className="modal__button button">
 					<button 
 						className="button__yes btn"
-						onClick={() => {
-							if (!side) {
-								dispatch(removeItem(id));
-								if (toDoActive.length === 1) {
-									dispatch(changeStatusCollection(collectionActive, 0));
-								} else {
-									let count = 0;
-									toDoActive.forEach(item => {
-										if (item.complete) {
-											count ++; 
-											if (count === toDoActive.length - 1) {
-												dispatch(changeStatusCollection(collectionActive, 2));
-											}
-										}
-									})
-								}
-							} else {
-								dispatch(removeList(id));
-								if (collections.length > 1) {
-									collections.forEach((item, index) => {
-										if (item.title === collectionActive && item.id === id) {
-											dispatch(makeCollectionActive(item[index - 1].title));
-											return;
-										}
-									});
-								}
-								if (collections.length === 1) {
-									dispatch(makeCollectionActive());
-									dispatch(removeListAll());
-								}
-							}
-							dispatch(hideModalRemove());
-						}}
+						onClick={removeItems}
 					>Да</button>
 					<button 
 						className="button__no btn"
