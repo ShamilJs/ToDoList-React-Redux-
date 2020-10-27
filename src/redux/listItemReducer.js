@@ -6,7 +6,8 @@ import { CREATE_COLLECTION_TO_DO,
     REMOVE_LIST,
     REMOVE_LIST_ALL,
     SORT_BY_DATA,
-    REMOVE_LIST_ITEM_WHEN_DELETING_A_SHEET } from './types';
+    REMOVE_LIST_ITEM_WHEN_DELETING_A_SHEET,
+    SORT_BY_ALPHABET } from './types';
 
 const initiaState = {
     collections: [],
@@ -48,6 +49,17 @@ export const listItemReducer = (state = initiaState, action) => {
         
         case SORT_BY_DATA:
             return {...state, todoList: state.todoList.reverse()};
+
+        case SORT_BY_ALPHABET:
+            let sort = state.collections.sort(function(a, b){
+                let titleA=a.title.toLowerCase(), 
+                    titleB=b.title.toLowerCase();
+                if (titleA < titleB) return -1;
+                if (titleA > titleB) return 1;
+                return 0;
+                })
+
+            return {...state, collections: sort}
 
         default: return state;
     }

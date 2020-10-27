@@ -11,7 +11,8 @@ import { CREATE_COLLECTION_TO_DO,
         REMOVE_LIST_ITEM_WHEN_DELETING_A_SHEET,
         REMOVE_LIST,
         REMOVE_LIST_ALL,
-        SORT_BY_DATA } from './types';
+        SORT_BY_DATA,
+        SORT_BY_ALPHABET } from './types';
 
 export const createCollection = collectionItem => {
     return {
@@ -113,5 +114,11 @@ export const changeStatusCollection = (title, status) => {
 export const sortByData = () => {
     return {
         type: SORT_BY_DATA
+    };
+};
+
+export const sortByAlphabet = () => {
+    return {
+        type: SORT_BY_ALPHABET
     };
 };

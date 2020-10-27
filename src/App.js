@@ -6,6 +6,7 @@ import { ModalRemove } from './Components/Modal/ModalRemove';
 import { ToDoListItem } from './Components/ToDoListItem/ToDoListItem';
 import './style.css';
 import { ArrContext } from './Components/ContextHook';
+import { Authorization } from './Components/Authorization/Authorization';
 
 
 const App = () => {
@@ -27,10 +28,11 @@ const App = () => {
 				<p className="header__title">ToDo List</p>
 			</header>
 			<main className="main">
-			<ArrContext.Provider value={sort}>
-				<CollectionToDo sort={sort} setSort={setSort}/>
-				<ToDoListItem/>
-			</ArrContext.Provider>
+				<Authorization/>
+				{/* <ArrContext.Provider value={sort}>
+					<CollectionToDo sort={sort} setSort={setSort}/>
+					<ToDoListItem/>
+				</ArrContext.Provider> */}
 			</main>
 			{selectorApp.modal && <Modal messageSide={messageSide}/>}
 			{modalRemove.modal && <ModalRemove id={modalRemove.id} side={modalRemove.side}/>}

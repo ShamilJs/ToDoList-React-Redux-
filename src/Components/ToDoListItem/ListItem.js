@@ -12,7 +12,7 @@ export const ListItem = ({ todoList, titleCollection }) => {
 	const [count, setCount] = useState([]);
 
 	let value = [],
-		status = {title: '', status: 1};
+		status = {title: '', status: 2};
 
 	const changeStatusList = () => {
 		if (!result.length || !count.length) {
@@ -25,11 +25,11 @@ export const ListItem = ({ todoList, titleCollection }) => {
 					temp ++;
 					if (temp === result.length) {
 						temp = 0;
-						dispatch(changeStatusCollection(status.title, 2));
+						dispatch(changeStatusCollection(status.title, 1));
 						return;
 					}
 				}
-				dispatch(changeStatusCollection(status.title, 1));
+				dispatch(changeStatusCollection(status.title, 2));
 			});
 		}
 	};

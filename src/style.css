@@ -361,7 +361,7 @@ body {
     font-family: 'Pacifico', cursive;
     font-size: 24px;
     font-weight: 500;
-    width: 100%;
+    width: 80%;
     min-height: 50px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -517,4 +517,87 @@ body {
   background-image: url("./01.png");
   background-size: 150%;
 }
+/* //////////////////////////////////////////////////////////////////////////////////// */
+.inscription{
+    padding: 10px;
+    background-color: rgba(255, 255, 115, 0.2);
+    color: #A6A600;
+    box-shadow: inset 3px -1px 14px 3px rgba(46, 62, 80, 0.15);
+    text-align: center;
+}
 
+.relative{
+    margin-bottom: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+.relative img {
+    width: 100%;
+}
+
+.authoriz {
+    width: 600px;
+    /* border: 2px solid steelblue; */
+    /* box-shadow: -14px 2px 4px 5px rgba(46, 62, 80, 0.15); */
+    height: 100%;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* flex-direction: column; */
+    /*  */
+    
+}
+
+.authoriz__form {
+    width: 300px;
+    height: 300px;
+    border: 2px solid steelblue;
+    box-shadow: -14px 2px 4px 5px rgba(46, 62, 80, 0.15);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    padding: 10px;
+    /* align-items: center; */
+}
+
+.authoriz__title {
+    font-family: 'Pacifico', cursive;
+    font-size: 22px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+
+.input-authoriz{
+    height: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid steelblue;
+    margin-bottom: 10px;
+}
+
+.authoriz__form{
+    display: flex;
+}
+.authoriz__button{
+    margin-top: 30px;
+    margin-right: 20px;
+}
+
+.btn-authoriz{
+    width: 100px;
+    height: 30px;
+    border: 1px solid steelblue;
+    box-shadow: inset -5px 4px 7px 0px rgba(46, 62, 80, 0.15);
+    cursor: pointer;
+}
+.btn-authoriz:hover{
+    box-shadow: -3px -1px 2px 2px rgba(46, 62, 80, 0.15);
+}
+
+.authoriz__achor{
+    color:  steelblue;
+    text-decoration: underline;
+}

@@ -49,7 +49,7 @@ export const FormControl = ({ placeholder, toDoRight }) => {
 			}
 			dispatch(createTodoList(form));
 			dispatch(showModalSuccessful('right'));
-			dispatch(changeStatusCollection(form.titleToDo, 1));
+			dispatch(changeStatusCollection(form.titleToDo, 2));
 		} else {
 			const formCollection = {
 				title: form.title, 

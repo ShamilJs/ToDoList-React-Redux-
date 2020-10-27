@@ -3,14 +3,15 @@ import { useSelector } from 'react-redux';
 import { FilterColection } from '../FilterCollection/FilterColection';
 import { FormControl } from '../FormControl/FormControl';
 import { TodoList } from '../TodoList/TodoList';
+import { SortButton } from '../Other/SortButton';
 
 
-export const CollectionToDo = ({sort, setSort }) => {
-	const selector = useSelector(state => state.collections);
-	const todoList = selector.collections;
-
+export const CollectionToDo = ({ setSort }) => {
+	const selector = useSelector(state => state.collections),
+		todoList = selector.collections;
+	
 	const [select, setSelect] = useState('');
-
+	const [alphabet, setAlphabet] = useState(false);
 	const [result, setResult] = useState([]);
 
 	const arr = useRef([]);
@@ -19,12 +20,9 @@ export const CollectionToDo = ({sort, setSort }) => {
 
 	const handleChange = useCallback(() => {
 		if (select === '') return;
-		if (select === 'Все списки') {
-			setSort([...todoList]);
-			setResult([...todoList]);
-			return;
-		}
-		arr.current = todoList.filter(item => item.id === select);
+		if (select === 'Все списки') arr.current = todoList;
+		if (select === 'Неисполненные') arr.current = todoList.filter(item => item.status === 2 || item.status === 0);
+		if (select === 'Исполненные') arr.current = todoList.filter(item => item.status === 1);
 		setResult([...arr.current]);
 		setSort([...arr.current])
 	}, [todoList, select, setSort]);
@@ -33,8 +31,9 @@ export const CollectionToDo = ({sort, setSort }) => {
 
 	useEffect(() => {
 		setResult([...todoList]);
-		handleChange();
-	}, [todoList, handleChange])
+		if (!alphabet) handleChange();
+		setAlphabet(false);
+	}, [todoList, handleChange, alphabet])
 
 
     return (
@@ -42,9 +41,8 @@ export const CollectionToDo = ({sort, setSort }) => {
 				<div className="list-left__content content">
 					<FilterColection 
 						setSelect={setSelect}
-						todoList={todoList}
-						handleChange={handleChange}
 					/>
+					<SortButton title={''} setAlphabet={setAlphabet}/>
 					<TodoList 
 						todoList={result}
 						active={active}
