@@ -587,6 +587,7 @@ body {
     flex-direction: column;
     /* justify-content: center; */
     padding: 10px;
+    margin-bottom: 150px;
     /* align-items: center; */
 }
 
@@ -629,4 +630,8 @@ body {
 .authoriz__achor{
     color:  steelblue;
     text-decoration: underline;
+}
+
+.input-authoriz-required{
+    color: red;
 }

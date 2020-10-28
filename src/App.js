@@ -7,9 +7,29 @@ import { ToDoListItem } from './Components/ToDoListItem/ToDoListItem';
 import './style.css';
 import { ArrContext } from './Components/ContextHook';
 import { Authorization } from './Components/Authorization/Authorization';
+import firebase from 'firebase/app';
+import 'firebase/auth'
+import { userId } from './Components/Authorization/AuthUser';
 
+
+// const firebaseConfig = {
+// 	apiKey: "AIzaSyDy9BSdaY9oU3VPzQUGZiFiXPCExhv33Fs",
+// 	authDomain: "todolist-a22c4.firebaseapp.com",
+// 	databaseURL: "https://todolist-a22c4.firebaseio.com",
+// 	projectId: "todolist-a22c4",
+// 	storageBucket: "todolist-a22c4.appspot.com",
+// 	messagingSenderId: "770915980359",
+// 	appId: "1:770915980359:web:7e79a8af69075ba7ce8d62"
+//   };
+
+// firebase.initializeApp(firebaseConfig);
 
 const App = () => {
+	// const user = firebase.auth().onAuthStateChanged();
+	// console.log(user);
+	// const user = userId();
+	// console.log('user: ', user);
+
 	let messageSide = '';
 	const selectorApp = useSelector(state => state.app),
 		modalRemove = useSelector(state => state.modalRemoveReduser),
@@ -33,10 +53,22 @@ const App = () => {
 			</header>
 			<main className="main">
 				<Authorization/>
-				{/* <ArrContext.Provider value={sort}>
+					{/* {firebase.auth().onAuthStateChanged(user => {
+						if (user) {
+							<>
+								<ArrContext.Provider value={sort}>
+									<CollectionToDo sort={sort} setSort={setSort}/>
+									<ToDoListItem/>
+								</ArrContext.Provider>
+							</>
+						} else {
+							this.$router.push('/login')
+						}
+						})} */}
+					{/* {user && <ArrContext.Provider value={sort}>
 					<CollectionToDo sort={sort} setSort={setSort}/>
 					<ToDoListItem/>
-				</ArrContext.Provider> */}
+				</ArrContext.Provider> } */}
 			</main>
 			{selectorApp.modal && <Modal messageSide={messageSide}/>}
 			{modalRemove.modal && <ModalRemove id={modalRemove.id} side={modalRemove.side}/>}

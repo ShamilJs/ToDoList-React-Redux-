@@ -1,37 +1,76 @@
 import React, { useState } from 'react';
+import { authUser, regUser } from './AuthUser';
+import { useAutorization } from './UseAutorization';
 
 export const Authorization = () => {
-    const [registr, setRegistr] = useState(false);
+    const [changeWindow, setChangeWindow] = useState(false);
+    const { authState, setAuthState } = useAutorization();
 
-    const handleRegistr = (e) => {
+    const changeAuthorizationWindow = (e) => {
 		e.preventDefault();
-		if (e.target.textContent === 'Зарегистрироваться') setRegistr(true);
-		else setRegistr(false);
-    }
+		let value = (e.target.textContent === 'Зарегистрироваться') ?
+			true : false;
+		setChangeWindow(value);
+	};
+	
+	const changeStateAuth = (e) => {
+		e.persist();
+		let value = (e.target.name === 'email') ? 'email' : 'password';
+		setAuthState(authState => ({...authState,
+			[value]: e.target.value}));
+	};
 
     return (
         <div className="authoriz">
-			{registr && <h2 className="authoriz__main">Создайте аккаунт и управляйте своими делами!</h2>}
-			{!registr && <h2 className="authoriz__main">Войдите в свой личный кабинет и управляйте своими делами!</h2>}
+			{changeWindow && <h2 className="authoriz__main">Создайте аккаунт и управляйте своими делами!</h2>}
+			{!changeWindow && <h2 className="authoriz__main">Войдите в свой личный кабинет и управляйте своими делами!</h2>}
 			<form className="authoriz__form">
-                {!registr && <p className="authoriz__title">Авторизация</p>}
-                {registr && <p className="authoriz__title">Регистрация</p> }
-				{registr && <><label htmlFor="name">Фамилия и имя</label>
+                {!changeWindow && <p className="authoriz__title">Авторизация</p>}
+                {changeWindow && <p className="authoriz__title">Регистрация</p> }
+				{changeWindow && <><label htmlFor="name">Фамилия и имя</label>
                 	<input name="name" className="authoriz__Name input-authoriz" type="text" placeholder="Введите фамилию и имя"/>
 					</>
 				}
-                <label htmlFor="login">Логин</label>
-                <input name="login" className="authoriz__login input-authoriz" type="text" placeholder="Введите логин"/>
-                <label htmlFor="password">Пароль</label>
-                <input name="password" className="authoriz__password input-authoriz" type="password" placeholder="Введите пароль"/>
+                <label htmlFor="email">Электронная почта<span className="input-authoriz-required">*</span></label>
+                <input 
+                    name="email" 
+                    className="authoriz__login input-authoriz" 
+                    type="email" 
+                    placeholder="Электронная почта"
+                    required
+					value={authState.email}
+					onChange={changeStateAuth} 
+                />
+                <label htmlFor="password">Пароль<span className="input-authoriz-required">*</span></label>
+                <input 
+                    name="password" 
+                    className="authoriz__password input-authoriz" 
+                    type="password" 
+                    placeholder="Введите пароль"
+					required
+					value={authState.password}
+					onChange={changeStateAuth}
+                />
                 <div className="authoriz__form-control">
-                    {!registr && <button className="authoriz__button btn-authoriz">Войти</button> }
-                    {registr && <button className="authoriz__button btn-authoriz">Зарегистрироваться</button>}
-                    {!registr && <a href="/" className="authoriz__achor"
-                        onClick={handleRegistr}
+					{!changeWindow &&
+						<button className="authoriz__button btn-authoriz"
+							onClick={(e) => {
+								e.preventDefault();
+								authUser(authState.email, authState.password);
+							}}
+						>Войти</button> }
+                    {changeWindow &&
+						<button className="authoriz__button btn-authoriz"
+							onClick={(e) => {
+								e.preventDefault();
+								regUser(authState.email, authState.password);
+							}}
+						>Зарегистрироваться</button>}
+                    {!changeWindow && <a href="/" className="authoriz__achor"
+                        onClick={changeAuthorizationWindow}
                     >Зарегистрироваться</a>}
-                    {registr && <a href="/" className="authoriz__achor"
-						onClick={handleRegistr}
+                    {changeWindow && <a href="/" className="authoriz__achor"
+						onClick={changeAuthorizationWindow}
 					>Есть аккаунт?</a>}
                 </div>
             </form>
