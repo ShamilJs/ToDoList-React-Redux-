@@ -48,8 +48,8 @@ h1, h2, h3, p {
 
 body {
     background: #edf0f1;
-    height: 100%;
-    width: 100%;
+    height: 97%;
+    width: 99%;
     position: relative;
 }
 
@@ -72,8 +72,28 @@ body {
     font-size: 32px;
 }
 
-
-
+.header_login{
+    width: 50px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 30px;
+    cursor: pointer;
+}
+.header_login img{
+    width: 80%;
+}
+.header_login:hover{
+    box-shadow: -14px 2px 4px 5px rgba(46, 62, 80, 0.15);
+}
+.header_login:active{
+    box-shadow: inset -8px -8px 0px 4px rgba(46, 62, 80, 0.15);
+}
+.header_name{
+    font-size: 14px;
+}
 /*------------------------main-------------------------------*/
 
 .main {
@@ -412,6 +432,9 @@ body {
 }
 }
 @media only screen and (max-width: 540px) {
+    .header_login{
+        right: 10px;
+    }
      .content__title {
         height: 60px !important;
         align-items: flex-start;
@@ -545,14 +568,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* flex-direction: column; */
+    flex-direction: column;
     /*  */
     
 }
 
+.authoriz__main{
+    margin-bottom: 100px;
+    text-align: center;
+}
+
 .authoriz__form {
     width: 300px;
-    height: 300px;
+    min-height: 300px;
     border: 2px solid steelblue;
     box-shadow: -14px 2px 4px 5px rgba(46, 62, 80, 0.15);
     display: flex;
@@ -587,11 +615,12 @@ body {
 }
 
 .btn-authoriz{
-    width: 100px;
+    min-width: 100px;
     height: 30px;
     border: 1px solid steelblue;
     box-shadow: inset -5px 4px 7px 0px rgba(46, 62, 80, 0.15);
     cursor: pointer;
+    margin-bottom: 30px;
 }
 .btn-authoriz:hover{
     box-shadow: -3px -1px 2px 2px rgba(46, 62, 80, 0.15);

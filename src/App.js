@@ -26,6 +26,10 @@ const App = () => {
 		<>
 			<header className="header">
 				<p className="header__title">ToDo List</p>
+				<div className="header_login">
+					<img src="./img/exit.png"/>
+					<p className="header_name">Аккаунт</p>
+				</div>
 			</header>
 			<main className="main">
 				<Authorization/>
