@@ -12,7 +12,11 @@ import { CREATE_COLLECTION_TO_DO,
         REMOVE_LIST,
         REMOVE_LIST_ALL,
         SORT_BY_DATA,
-        SORT_BY_ALPHABET } from './types';
+        SORT_BY_ALPHABET,
+        CREATE_AUTHORIZED_USER,
+        VIEW_MESSAGE_AUTH,
+        SHOW_LOADER,
+        HIDE_LOADER } from './types';
 
 export const createCollection = collectionItem => {
     return {
@@ -120,5 +124,36 @@ export const sortByData = () => {
 export const sortByAlphabet = () => {
     return {
         type: SORT_BY_ALPHABET
+    };
+};
+
+export const createAuthorizedUser = (name, id) => {
+    return {
+        type: CREATE_AUTHORIZED_USER,
+        payload: name,
+        userId: id
+    };
+};
+
+export const viewMessageAuth = (payload, text) => {
+    return {
+        type: VIEW_MESSAGE_AUTH,
+        payload: payload,
+        text: text
+    };
+};
+
+
+export const showLoader = () => {
+    return {
+        type: SHOW_LOADER,
+		payload: true
+    };
+};
+
+export const hideLoader = () => {
+    return {
+        type: HIDE_LOADER,
+		payload: false
     };
 };

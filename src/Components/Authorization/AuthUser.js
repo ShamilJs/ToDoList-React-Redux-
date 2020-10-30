@@ -1,8 +1,5 @@
-// import React, { useState } from 'react';
 import firebase from 'firebase/app';
-// import { useAutorization } from './UseAutorization';
 import 'firebase/auth';
-// import { useState } from 'react';
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDy9BSdaY9oU3VPzQUGZiFiXPCExhv33Fs",
@@ -15,23 +12,65 @@ const firebaseConfig = {
 };
 
 
-
 firebase.initializeApp(firebaseConfig);
 
-export const authUser = async(email, password) => {
+export const authUser = async(email, password, setValue, setMessage) => {
+
     try {
-        const data = await firebase.auth().signInWithEmailAndPassword(email, password);
-        console.log(data.user.uid)
+		const data = await firebase.auth().signInWithEmailAndPassword(email, password);
+		setValue({name: data.user.displayName, id: data.user.uid});
+		localStorage.setItem('userId', JSON.stringify(data.user.uid));
+		return
     } catch (error) {
-        console.log(error.message)
+		setMessage({ on: true, text: error.message})
     }
 }   
 
-export const regUser = async(email, password) => {
+export const regUser = async(email, password, displayName, setValue, setMessage) => {
     try {
-        const data = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        console.log(data.user.uid)
+		await firebase.auth().createUserWithEmailAndPassword(email, password);	
+        const user = await firebase.auth().currentUser;
+		user.updateProfile({ displayName })
+		.then(() => {
+			setValue({name: user.displayName, id: user.uid});
+			setMessage({ on: false, text: ''})
+			localStorage.setItem('userId', JSON.stringify(user.uid));
+			return
+			})
     } catch (error) {
-        console.log(error.message)
+		setMessage({ on: true, text: error.message})
     }
 } 
+
+export const exitTheApp = async(setValue, setMessage) => {
+	try {
+		await firebase.auth().signOut()
+			.then(() => {
+				setValue(false);
+				localStorage.setItem('userId', JSON.stringify(''));
+				setMessage({ on: false, text: ''})
+				setValue(true);
+				return
+			})
+	} catch (error) {
+		setMessage({ on: true, text: error.message})
+	}
+}
+
+export const checkAuthorization = async(localUser, setLocal) => {
+	try {
+		await firebase.auth().onAuthStateChanged(user => {
+			if (user !== null) {
+				if (user.uid === localUser) {
+					setLocal({name: user.displayName, id: user.uid});
+					return
+				} 
+			} else {
+				return
+			}
+
+		})
+	} catch (error) {
+        console.log(error.message)
+	}
+}
