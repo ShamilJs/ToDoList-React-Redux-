@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {  Route, BrowserRouter as Router, Switch, useParams, NavLink } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch, useParams, NavLink } from 'react-router-dom';
 import { makeCollectionActive, showModalRemove } from '../../redux/actions';
 import { Inscription } from '../Other/Inscription';
-
-// import { ArrContext } from '../ContextHook';
 
 
 export const TodoList = ({ todoList, active }) => {
 	const dispatch = useDispatch();
-	// const arr = useContext(ArrContext);
     if (!todoList.length) return <Inscription inscription={'Списки дел не созданы'}/>
 	
     return (
@@ -25,9 +22,7 @@ export const TodoList = ({ todoList, active }) => {
 					>
 						<NavLink 
 							to={`/${item.title}` } 
-							activeStyle={{
-										fontWeight: "bold"
-									}}
+							activeStyle={{fontWeight: "bold"}}
 						>
 							<span className="text-todo -left">{item.title}</span>
 							<div className="todo-buttons">

@@ -16,14 +16,14 @@ export const FormControl = ({ placeholder, toDoRight }) => {
 
 	const [form, setForm] =
 		useState({
-				title:'', 
-				fast: false,
-				date: '',
-				time: '',
-				titleToDo: '',
-				complete: false,
-				id: ''
-			});
+			title:'', 
+			fast: false,
+			date: '',
+			time: '',
+			titleToDo: '',
+			complete: false,
+			id: ''
+		});
 					
 	const createDate = () => {
 		const dateNow = new Date();
