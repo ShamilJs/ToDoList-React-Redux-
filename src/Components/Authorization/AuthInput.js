@@ -18,14 +18,20 @@ export const AuthInput = ({	type, state, action}) => {
 
 	}
     return (
-        <input 
-			name={attribute.name} 
-			className={`${attribute.className} input-authoriz`}
-			type={type} 
-			placeholder={attribute.placeholder}
-			required
-			value={state}
-			onChange={action}
-		/>
+		<>
+			<label htmlFor={type}>{(type === 'name') ? 'Имя' :
+				(type === 'password') ? 'Пароль' : 'Электронная почта'}
+				<span className="input-authoriz-required">*</span>
+			</label>
+			<input 
+				name={attribute.name} 
+				className={`${attribute.className} input-authoriz`}
+				type={type} 
+				placeholder={attribute.placeholder}
+				required
+				value={state}
+				onChange={action}
+			/>
+		</>
     )
 }
