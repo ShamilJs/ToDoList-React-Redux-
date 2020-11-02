@@ -7,7 +7,7 @@ import { Inscription } from '../Other/Inscription';
 
 export const TodoList = ({ todoList, active }) => {
 	const dispatch = useDispatch();
-    if (!todoList.length) return <Inscription inscription={'Списки дел не созданы'}/>
+    if (!todoList.length) return <Inscription inscription={'Списки дел не созданы'} simple={true}/>
 	
     return (
 		<Router>

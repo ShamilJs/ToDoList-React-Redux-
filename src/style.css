@@ -217,7 +217,7 @@ body {
 
 .actives{
 	border: 2px solid black;
-	box-shadow: inset 2px -1px 14px 13px rgba(0, 0, 0, 0.1);
+	/* box-shadow: inset 2px -1px 14px 13px rgba(0, 0, 0, 0.1); */
 }
 
 .todo-item:last-of-type {

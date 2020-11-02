@@ -46,7 +46,7 @@ export const ListItem = ({ todoList, titleCollection }) => {
 	
 	useEffect(changeStatusList, [count]);
 
-	if (!result.length) return <Inscription inscription={'Список дел пуст'}/>
+	if (!result.length) return <Inscription inscription={'Список дел пуст'} simple={true}/>
 		
     return (
         <ul className="content__todo todo-list">

@@ -1,8 +1,9 @@
 import React from 'react';
 
 
-export const Inscription = ({inscription}) => {
+export const Inscription = ({ inscription, simple = false }) => {
+    let value = (!simple) ? "inscription" : "";
     return (
-        <p className="inscription">{inscription}</p>
+        <p className={value}>{inscription}</p>
     );
 };
