@@ -8,15 +8,18 @@ import { ToDoListItem } from './Components/ToDoListItem/ToDoListItem';
 import './style.css';
 import { ArrContext } from './Components/ContextHook';
 import { Authorization } from './Components/Authorization/Authorization';
-import { checkAuthorization, exitTheApp } from './Components/Authorization/AuthUser';
-import { createAuthorizedUser, hideLoader, showLoader, viewMessageAuth } from './redux/actions';
+import { checkAuthorization, exitTheApp } from './FireBase/AuthUser';
+import { createAuthorizedUser, hideLoader, readInitialState, showLoader, viewMessageAuth } from './redux/actions';
+import { writeInDataBase, readFromDataBase } from './FireBase/DataBase';
 
 
 const App = () => {
 	const selectorApp = useSelector(state => state.app),
 		modalRemove = useSelector(state => state.modalRemoveReduser),
-		selectorCollection = useSelector(state => state.collections.collections),
-		newTodoList = selectorCollection[selectorCollection.length - 1],
+		collections = useSelector(state => state.collections.collections),
+		toDoList = useSelector(state => state.collections.todoList),
+		collectionsActive = useSelector(state => state.collections.collectionActive),
+		newTodoList = collections[collections.length - 1],
 		newTodo = useSelector(state => state.collections.todoList[state.collections.todoList.length - 1]),
 		authUser = useSelector(state => state.fireBase);
 	let messageSide = '';
@@ -24,9 +27,33 @@ const App = () => {
 	const dispatch = useDispatch();
 	const [sort, setSort] = useState([]);
 	const [local, setLocal] = useState(null);
+	const [temp, setTemp] = useState(false)
+	const localUser = JSON.parse(localStorage.getItem('userId'));
 
 	useEffect(() => {
-		const localUser = JSON.parse(localStorage.getItem('userId'));
+		if (localUser !== '') {
+			readFromDataBase(localUser)
+			.then(list => {
+				if (list) dispatch(readInitialState(list));
+				setTemp(true);
+			})
+			.then(() => {
+				dispatch(hideLoader())
+			})
+			.catch(error => console.log(error.message));
+		}
+		// eslint-disable-next-line
+	}, [localUser]);
+
+	useEffect(() => {
+		if (localUser !== '') {
+			if (temp) writeInDataBase(localUser, collections, collectionsActive, toDoList)
+			.catch(error => console.log(error.message));
+		}
+		// eslint-disable-next-line
+	}, [collections, collectionsActive, toDoList]);
+
+	useEffect(() => {
 		if ( localUser !== '') {
 			dispatch(showLoader())
 			checkAuthorization(localUser, setLocal)
@@ -36,8 +63,8 @@ const App = () => {
 
 	useEffect(() => {
 		if (local !== null) {
-			dispatch(createAuthorizedUser(local.name, local.id))
-			dispatch(hideLoader())
+			dispatch(createAuthorizedUser(local.name, local.id));
+			
 		} else return
 	}, [local, dispatch])
 	
@@ -49,7 +76,9 @@ const App = () => {
 		.then(() => {
 			localStorage.setItem('userId', JSON.stringify(''));
 			dispatch(viewMessageAuth(false, ''));
-			dispatch(createAuthorizedUser('', ''))
+			dispatch(createAuthorizedUser('', ''));
+			dispatch(readInitialState(null));
+			setTemp(false);
 		})
 		.catch(error => console.log(error))
 	};
@@ -67,14 +96,12 @@ const App = () => {
 			</header>
 
 			<main className="main">
-				{(authUser.userId === '') && <Authorization/>}
+				{(authUser.userId === '') && <Authorization />}
 				{(authUser.userId !== '') &&
-					<>
 						<ArrContext.Provider value={sort}>
 							<CollectionToDo sort={sort} setSort={setSort}/>
 							<ToDoListItem/>
 						</ArrContext.Provider>
-					</>
 				}
 			</main>
 			

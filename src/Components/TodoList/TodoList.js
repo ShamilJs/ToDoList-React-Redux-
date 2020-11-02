@@ -14,9 +14,9 @@ export const TodoList = ({ todoList, active }) => {
 			<ul className="content__todo todo-list">
 				{todoList.map(item => (
 					<li className={
-						(item.status === 0) ? `todo-item ${(item.title === active) ? 'active' : ''}` :
-						(item.status === 1) ? `todo-item ${(item.title === active) ? 'active' : ''} list-active` :
-						(`todo-item ${(item.title === active) ? 'active' : ''} list-compl`)
+						(item.status === 0) ? `todo-item ${(item.title === active) ? 'actives' : ''}` :
+						(item.status === 1) ? `todo-item ${(item.title === active) ? 'actives' : ''} list-active` :
+						(`todo-item ${(item.title === active) ? 'actives' : ''} list-compl`)
 						} 
 						key={item.id}
 					>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { showLoader, hideLoader, viewMessageAuth, createAuthorizedUser } from '../../redux/actions';
-import { authUser, regUser, updateProfile } from './AuthUser';
+import { authUser, regUser, updateProfile } from '../../FireBase/AuthUser';
 
 export const AuthButton = ({ authState, title }) => {
     const dispatch = useDispatch();
@@ -14,7 +14,6 @@ export const AuthButton = ({ authState, title }) => {
             regUser(authState.email, authState.password)
             .then(() => updateProfile(authState.name)))
         .then(user => {
-            dispatch(hideLoader());
             dispatch(viewMessageAuth('', ''));
             let value = authState.name ? 
                 authState.name : user.displayName;

@@ -7,7 +7,9 @@ import { CREATE_COLLECTION_TO_DO,
     REMOVE_LIST_ALL,
     SORT_BY_DATA,
     REMOVE_LIST_ITEM_WHEN_DELETING_A_SHEET,
-    SORT_BY_ALPHABET } from './types';
+    SORT_BY_ALPHABET,
+    READE_INITIAL_STATE } from './types';
+   
 
 const initiaState = {
     collections: [],
@@ -16,8 +18,14 @@ const initiaState = {
 };
 
 export const listItemReducer = (state = initiaState, action) => {
-	
+    
+    
     switch (action.type) {
+        case READE_INITIAL_STATE: 
+            return {...state, collections: action.collections || [],
+                collectionActive: action.collectionsActive || '',
+                todoList: action.toDoList || []}
+
         case CREATE_COLLECTION_TO_DO: 
             return {...state, collections: state.collections.concat([action.payload])};
 

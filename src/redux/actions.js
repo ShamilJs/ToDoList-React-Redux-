@@ -16,7 +16,8 @@ import { CREATE_COLLECTION_TO_DO,
         CREATE_AUTHORIZED_USER,
         VIEW_MESSAGE_AUTH,
         SHOW_LOADER,
-        HIDE_LOADER } from './types';
+        HIDE_LOADER,
+        READE_INITIAL_STATE } from './types';
 
 export const createCollection = collectionItem => {
     return {
@@ -155,5 +156,15 @@ export const hideLoader = () => {
     return {
         type: HIDE_LOADER,
 		payload: false
+    };
+};
+
+export const readInitialState = (payload) => {
+    if (payload === null) payload = {collections: [], collectionsActive: '', toDoList: []}
+    return {
+        type: READE_INITIAL_STATE,
+        collections: payload.collections,
+        collectionsActive: payload.collectionsActive,
+        toDoList: payload.toDoList
     };
 };

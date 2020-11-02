@@ -36,4 +36,4 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 
 export const HIDE_LOADER = 'HIDE_LOADER';
 
-
+export const READE_INITIAL_STATE = 'READE_INITIAL_STATE';

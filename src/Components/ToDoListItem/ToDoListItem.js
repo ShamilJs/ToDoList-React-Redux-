@@ -1,11 +1,11 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FilterColection } from '../FilterCollection/FilterColection';
 import { FormControl } from '../FormControl/FormControl';
 import { ListItem } from './ListItem';
 import { Inscription } from '../Other/Inscription';
 import { ArrContext } from '../ContextHook';
 import { SortButton } from '../Other/SortButton';
+import { Burger } from './Burger';
 
 export const ToDoListItem = () => {
 	const todoList = useSelector(state =>  state.collections.todoList),
@@ -16,6 +16,7 @@ export const ToDoListItem = () => {
 
 	const arr = useContext(ArrContext);
 	const temp = useRef(false);
+	const [openList, setOpenList] = useState('');
 
 	let count = 0;
 	arr.forEach(item => {
@@ -31,7 +32,7 @@ export const ToDoListItem = () => {
 	});
 
     return (
-        <div className="list-right list">
+        <div className={`list-right list ${openList}`}>
 			{(titleCollection === '' && !collections.length) ?
 				<Inscription inscription={'Добавьте новый список и перейдите в него для добавления нового дела'}/> :
 				(titleCollection === '' && collections.length) ?
@@ -46,7 +47,8 @@ export const ToDoListItem = () => {
 							titleCollection={titleCollection}
 						/>
 						{result.length > 1 && <SortButton title={'Сортировать по дате'} side={'right'}/> }
-						<FilterColection toDoRight={true}/>
+						<Burger openList={openList} setOpenList={setOpenList}/>
+
 					</div>
 					<div className="list-right__control control">
 						<FormControl 

@@ -1,11 +1,10 @@
 import React from 'react';
 
 
-export const FilterColection = ({ setSelect, toDoRight }) => {
+export const FilterColection = ({ setSelect }) => {
    
     return(
-        <select 
-            className={toDoRight ? 'content__filter right_filter' : 'content__filter'}
+        <select className='content__filter'
             onChange={(e) => setSelect(e.target.value)}
         >
             <option value="Все списки">Все списки</option>
