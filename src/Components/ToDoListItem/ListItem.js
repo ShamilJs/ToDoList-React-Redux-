@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch} from 'react-redux';
 import { changeCompleteState, changeStatusCollection, showModalRemove } from '../../redux/actions';
 import { Inscription } from '../Other/Inscription';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 export const ListItem = ({ todoList, titleCollection }) => {
@@ -49,33 +50,39 @@ export const ListItem = ({ todoList, titleCollection }) => {
 	if (!result.length) return <Inscription inscription={'Список дел пуст'} simple={true}/>
 		
     return (
-        <ul className="content__todo todo-list">
+        <TransitionGroup component="ul" className="content__todo todo-list">
             {result.map(item => (
-                <li className="todo-item" key={item.id}>
-                    <div className="todo-item__title">
-                        <div className={!item.fast ? 'todo-status fast' : 'todo-status'}></div>
-                     <span className={!item.complete ? 'text-todo' : 'text-todo text-through'}>{item.title}</span> 
-                    </div>
-                    <div className="todo-buttons">
-                        <div className="todo-date">{item.date + ' ' + item.time}</div>
-                        <div className="todo-btn">
-                            <button 
-                                className="todo-complete"
-                                onClick={changeStatus}
-                            >
-                                <img 
-                                    src={!item.complete ? './img/uncheck.png' : './img/check_.png'}
-                                    name={item.id} alt='chek'
-                                />
-                            </button>
-							<button 
-								className="todo-remove"
-								onClick={() => dispatch(showModalRemove(item.id))}
-							></button>
-                        </div>
-                    </div>
-                </li>
+				<CSSTransition 
+					key={item.id}
+					classNames={'note'}
+					timeout={800}
+				>
+					<li className="todo-item">
+						<div className="todo-item__title">
+							<div className={!item.fast ? 'todo-status fast' : 'todo-status'}></div>
+						<span className={!item.complete ? 'text-todo' : 'text-todo text-through'}>{item.title}</span> 
+						</div>
+						<div className="todo-buttons">
+							<div className="todo-date">{item.date + ' ' + item.time}</div>
+							<div className="todo-btn">
+								<button 
+									className="todo-complete"
+									onClick={changeStatus}
+								>
+									<img 
+										src={!item.complete ? './img/uncheck.png' : './img/check_.png'}
+										name={item.id} alt='chek'
+									/>
+								</button>
+								<button 
+									className="todo-remove"
+									onClick={() => dispatch(showModalRemove(item.id))}
+								></button>
+							</div>
+						</div>
+					</li>
+				</CSSTransition>
             ))}
-		</ul>
+		</TransitionGroup>
     );
 };

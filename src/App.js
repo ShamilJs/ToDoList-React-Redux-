@@ -105,9 +105,10 @@ const App = () => {
 				}
 			</main>
 			
-			{selectorApp.modal && <Modal messageSide={messageSide}/>}
-			{modalRemove.modal && <ModalRemove id={modalRemove.id} side={modalRemove.side}/>}
-			{authUser.loader && <Loader/>}
+			<Modal messageSide={messageSide} modal={selectorApp.modal}/>
+			<ModalRemove modal={modalRemove.modal} id={modalRemove.id} side={modalRemove.side}/>
+			<Loader loader={authUser.loader}/>
+			{/* {authUser.loader && } */}
 		</>
 	);
 }

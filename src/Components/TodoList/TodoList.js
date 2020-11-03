@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Switch, useParams, NavLink } from 'react-router-dom';
 import { makeCollectionActive, showModalRemove } from '../../redux/actions';
 import { Inscription } from '../Other/Inscription';
-
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 export const TodoList = ({ todoList, active }) => {
 	const dispatch = useDispatch();
@@ -11,30 +11,36 @@ export const TodoList = ({ todoList, active }) => {
 	
     return (
 		<Router>
-			<ul className="content__todo todo-list">
+			<TransitionGroup component="ul" className="content__todo todo-list">
 				{todoList.map(item => (
-					<li className={
-						(item.status === 0) ? `todo-item ${(item.title === active) ? 'actives' : ''}` :
-						(item.status === 1) ? `todo-item ${(item.title === active) ? 'actives' : ''} list-active` :
-						(`todo-item ${(item.title === active) ? 'actives' : ''} list-compl`)
-						} 
+					<CSSTransition 
 						key={item.id}
+						classNames={'note'}
+						timeout={800}
 					>
-						<NavLink 
-							to={`/${item.title}` } 
-							activeStyle={{fontWeight: "bold"}}
+						<li className={
+							(item.status === 0) ? `todo-item ${(item.title === active) ? 'actives' : ''}` :
+							(item.status === 1) ? `todo-item ${(item.title === active) ? 'actives' : ''} list-active` :
+							(`todo-item ${(item.title === active) ? 'actives' : ''} list-compl`)
+							} 
+							// key={item.id}
 						>
-							<span className="text-todo -left">{item.title}</span>
-							<div className="todo-buttons">
-								<button 
-									className="todo-remove"
-									onClick={() => dispatch(showModalRemove(item.id, 'left'))}
-								/>
-							</div>
-						</NavLink>
-					</li> 
+							<NavLink 
+								to={`/${item.title}` } 
+								activeStyle={{fontWeight: "bold"}}
+							>
+								<span className="text-todo -left">{item.title}</span>
+								<div className="todo-buttons">
+									<button 
+										className="todo-remove"
+										onClick={() => dispatch(showModalRemove(item.id, 'left'))}
+									/>
+								</div>
+							</NavLink>
+						</li> 
+					</CSSTransition>
 				))} 
-			</ul>
+			</TransitionGroup>
 			<Switch>
 				<Route path="/:id" children={ <Child /> }/>
 			</Switch>

@@ -576,11 +576,15 @@ body {
 }
 /* //////////////////////////////////////////////////////////////////////////////////// */
 .inscription{
-    padding: 10px;
-    background-color: rgba(255, 255, 115, 0.2);
-    color: #A6A600;
-    box-shadow: inset 3px -1px 14px 3px rgba(46, 62, 80, 0.15);
+    border: 2px solid #A6A600;
+    width: 100%;
+    height: 200px;
+    padding: 30px 50px;
+    background-color: #edf0f1;
+    color: steelblue;
     text-align: center;
+    text-align: center;
+    font-size: 24px;
 }
 
 .relative{
@@ -826,4 +830,50 @@ body {
     	left:470px;
 		right:-470px;
     }
+}
+
+.animation_modal-enter {
+    opacity: 0;
+}
+.animation_modal-enter-active {
+    transition: opacity 200ms ease-in;
+    opacity: 1;
+}
+.animation_modal-exit-active {
+    transition: opacity 100ms ease-in;
+    opacity: 0;
+}
+
+.note-enter-active {
+    animation: note 0.8s ease-in alternate-reverse;
+}
+
+.note-exit-active {
+    animation: note 0.8s ease-out forwards;
+}
+
+@keyframes note  {
+    0% {
+        transform: translateX(0);
+    }
+    30% {
+        opacity: .7;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+}
+
+.animation_loader-enter {
+    opacity: 0;
+}
+.animation_loader-enter-active {
+    transition: opacity 200ms ease-in;
+    opacity: 1;
+}
+.animation_loader-exit-active {
+    transition: opacity 100ms ease-in;
+    opacity: 0;
 }

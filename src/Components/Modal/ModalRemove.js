@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import { hideModalRemove,
 	removeItem,
 	changeStatusCollection,
@@ -9,7 +10,7 @@ import { hideModalRemove,
 	removeItemWhenDaletingASheet
 } from '../../redux/actions';
 
-export const ModalRemove = ({ id, side }) => {
+export const ModalRemove = ({ id, side,modal }) => {
 	const toDoListItems = useSelector(state => state.collections.todoList),
 		collections = useSelector(state => state.collections.collections),
 		collectionActive = useSelector(state => state.collections.collectionActive),
@@ -50,25 +51,36 @@ export const ModalRemove = ({ id, side }) => {
 
 	
     return (
-        <div className="modal__remove modal">
-            <div className="oveflow">
-				<div className="modal__title">Удалить дело<br/>{itemName}?</div>
-                <div className="modal__button button">
-					<button 
-						className="button__yes btn"
-						onClick={removeItems}
-					>Да</button>
-					<button 
-						className="button__no btn"
+		<CSSTransition
+			in={modal}
+			timeout={{
+				enter: 200,
+				exit: 100
+			}}
+			classNames={'animation_modal'}
+			mountOnEnter
+			unmountOnExit
+		>
+			<div className="modal__remove modal">
+				<div className="oveflow">
+					<div className="modal__title">Удалить дело<br/>{itemName}?</div>
+					<div className="modal__button button">
+						<button 
+							className="button__yes btn"
+							onClick={removeItems}
+						>Да</button>
+						<button 
+							className="button__no btn"
+							onClick={() => dispatch(hideModalRemove())}
+						>Нет</button>
+					</div>
+					<div 
+						className="modal__close"
 						onClick={() => dispatch(hideModalRemove())}
-					>Нет</button>
-                </div>
-				<div 
-					className="modal__close"
-					onClick={() => dispatch(hideModalRemove())}
-				>X</div>
-            </div>	
-        </div>
+					>X</div>
+				</div>	
+			</div>
+		</CSSTransition>
 	);
 };
 
