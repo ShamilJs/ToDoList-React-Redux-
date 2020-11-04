@@ -33,6 +33,7 @@ export const ToDoListItem = () => {
 
     return (
         <div className={`list-right list ${openList}`}>
+			<Burger openList={openList} setOpenList={setOpenList}/>
 			{(titleCollection === '' && !collections.length) ?
 				<Inscription inscription={'Добавьте новый список и перейдите в него для добавления нового дела'}/> :
 				(titleCollection === '' && collections.length) ?
@@ -47,8 +48,6 @@ export const ToDoListItem = () => {
 							titleCollection={titleCollection}
 						/>
 						{result.length > 1 && <SortButton title={'Сортировать по дате'} side={'right'}/> }
-						<Burger openList={openList} setOpenList={setOpenList}/>
-
 					</div>
 					<div className="list-right__control control">
 						<FormControl 

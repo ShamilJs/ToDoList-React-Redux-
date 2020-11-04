@@ -25,21 +25,6 @@ export const FormControl = ({ placeholder, toDoRight }) => {
 			id: ''
 		});
 					
-	const createDate = () => {
-		const dateNow = new Date();
-
-		let str = {},
-			day = (dateNow.getDate() + '').length > 1 ? (dateNow.getDate() + '') : '0' + dateNow.getDate(),
-			month = ((dateNow.getMonth() + 1) + '').length > 1 ? ((dateNow.getMonth() + 1) + '') : '0' + (dateNow.getMonth() + 1),
-			hours = (dateNow.getHours() + '').length > 1 ? (dateNow.getHours() + '') : '0' + dateNow.getHours(),
-			minutes = (dateNow.getMinutes() + '').length > 1 ? (dateNow.getMinutes() + '') : '0' + dateNow.getMinutes(),
-			seconds = (dateNow.getSeconds() + '').length > 1 ? (dateNow.getSeconds() + '') : '0' + dateNow.getSeconds();
-
-		str.date = day + "." + month + "." + dateNow.getFullYear();
-		str.time = hours + ":" + minutes + ":" + seconds;
-		return str;
-	};
-
 	const sendToStore = (e) => {
 		e.preventDefault();
 		if (!form.title.trim()) return;
@@ -72,13 +57,13 @@ export const FormControl = ({ placeholder, toDoRight }) => {
 	
 	const handleInputChange = (e) => {
 		e.persist();
-		const str = createDate();
+		const str = new Date();
 		const target = e.target;
 		const value =  target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 		setForm(form => ({...form, [name]: value,
-			date: str.date,
-			time: str.time,
+			date: str.toLocaleDateString(),
+			time: str.toLocaleTimeString(),
 			titleToDo: selector,
 			id: `cmr${(+ new Date()).toString(16)}`
 		}));

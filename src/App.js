@@ -98,17 +98,16 @@ const App = () => {
 			<main className="main">
 				{(authUser.userId === '') && <Authorization />}
 				{(authUser.userId !== '') &&
-						<ArrContext.Provider value={sort}>
-							<CollectionToDo sort={sort} setSort={setSort}/>
-							<ToDoListItem/>
-						</ArrContext.Provider>
+					<ArrContext.Provider value={sort}>
+						<CollectionToDo sort={sort} setSort={setSort}/>
+						<ToDoListItem/>
+					</ArrContext.Provider>
 				}
 			</main>
 			
 			<Modal messageSide={messageSide} modal={selectorApp.modal}/>
 			<ModalRemove modal={modalRemove.modal} id={modalRemove.id} side={modalRemove.side}/>
 			<Loader loader={authUser.loader}/>
-			{/* {authUser.loader && } */}
 		</>
 	);
 }

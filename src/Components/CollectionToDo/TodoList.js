@@ -23,14 +23,10 @@ export const TodoList = ({ todoList, active }) => {
 							(item.status === 1) ? `todo-item ${(item.title === active) ? 'actives' : ''} list-active` :
 							(`todo-item ${(item.title === active) ? 'actives' : ''} list-compl`)
 							} 
-							// key={item.id}
 						>
-							<NavLink 
-								to={`/${item.title}` } 
-								activeStyle={{fontWeight: "bold"}}
-							>
+							<NavLink to={`/${item.title}`}>
 								<span className="text-todo -left">{item.title}</span>
-								<div className="todo-buttons">
+								<div className="todo-buttons left-buttons">
 									<button 
 										className="todo-remove"
 										onClick={() => dispatch(showModalRemove(item.id, 'left'))}

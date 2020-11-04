@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FilterColection } from '../FilterCollection/FilterColection';
 import { FormControl } from '../FormControl/FormControl';
-import { TodoList } from '../TodoList/TodoList';
+import { TodoList } from './TodoList';
 import { SortButton } from '../Other/SortButton';
 
 
